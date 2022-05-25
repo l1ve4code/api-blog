@@ -2,6 +2,7 @@ package ru.live4code.blog.data.user;
 
 import lombok.Data;
 import ru.live4code.blog.data.like.Like;
+import ru.live4code.blog.data.news.News;
 import ru.live4code.blog.data.role.Role;
 import ru.live4code.blog.data.util.UniqueFields;
 

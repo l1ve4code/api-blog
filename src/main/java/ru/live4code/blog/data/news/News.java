@@ -3,6 +3,7 @@ package ru.live4code.blog.data.news;
 import lombok.Data;
 import ru.live4code.blog.data.comment.Comment;
 import ru.live4code.blog.data.like.Like;
+import ru.live4code.blog.data.user.User;
 import ru.live4code.blog.data.util.UniqueFields;
 
 import javax.persistence.*;
@@ -18,6 +19,10 @@ public class News extends UniqueFields {
 
     @Column(name = "text")
     private String text;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id")
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "news_id")
