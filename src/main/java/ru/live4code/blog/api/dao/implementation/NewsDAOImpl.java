@@ -8,6 +8,7 @@ import ru.live4code.blog.api.dao.repository.UserRepository;
 import ru.live4code.blog.data.news.News;
 import ru.live4code.blog.data.user.User;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -23,6 +24,8 @@ public class NewsDAOImpl implements NewsDAO {
     public News create(News news, long user_id) {
         User user = userRepository.findById(user_id).orElse(null);
         if (user == null) return null;
+        news.setCreated_at(new Date());
+        news.setUpdated_at(new Date());
         news.setUser(user);
         newsRepository.save(news);
         return news;

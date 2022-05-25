@@ -10,6 +10,7 @@ import ru.live4code.blog.data.like.Like;
 import ru.live4code.blog.data.news.News;
 import ru.live4code.blog.data.user.User;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -25,10 +26,13 @@ public class LikeDAOImpl implements LikeDAO {
     private NewsRepository newsRepository;
 
     @Override
-    public Like create(Like like, long user_id, long news_id) {
+    public Like create(long user_id, long news_id) {
+        Like like = new Like();
         User user = userRepository.findById(user_id).orElse(null);
         News news = newsRepository.findById(news_id).orElse(null);
         if (user == null || news == null) return null;
+        like.setCreated_at(new Date());
+        like.setUpdated_at(new Date());
         like.setNews(news);
         like.setUser(user);
         likeRepository.save(like);

@@ -38,9 +38,6 @@ public class AuthRestControllerV1 {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RoleService roleService;
-
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthDTO authDTO){
         try {
@@ -75,11 +72,5 @@ public class AuthRestControllerV1 {
             throw new BadCredentialsException("Invalid username or password");
         }
     }
-
-//    @PostMapping("/role")
-//    public ResponseEntity role(@RequestBody RoleDTO roleDTO){
-//        Role role = roleService.create(RoleDTO.to(roleDTO));
-//        return ResponseEntity.ok(role);
-//    }
 
 }

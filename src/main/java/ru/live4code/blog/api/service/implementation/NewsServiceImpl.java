@@ -3,10 +3,12 @@ package ru.live4code.blog.api.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.live4code.blog.api.dao.NewsDAO;
+import ru.live4code.blog.api.dto.NewsDTO;
 import ru.live4code.blog.api.service.NewsService;
 import ru.live4code.blog.data.news.News;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -15,22 +17,22 @@ public class NewsServiceImpl implements NewsService {
     private NewsDAO newsDAO;
 
     @Override
-    public News create(News news, long user_id) {
-        return newsDAO.create(news, user_id);
+    public NewsDTO create(News news, long user_id) {
+        return NewsDTO.from(newsDAO.create(news, user_id));
     }
 
     @Override
-    public News delete(long id) {
-        return newsDAO.delete(id);
+    public NewsDTO delete(long id) {
+        return NewsDTO.from(newsDAO.delete(id));
     }
 
     @Override
-    public List<News> getAll() {
-        return newsDAO.getAll();
+    public List<NewsDTO> getAll() {
+        return newsDAO.getAll().stream().map(NewsDTO::from).collect(Collectors.toList());
     }
 
     @Override
-    public News findById(long id) {
-        return newsDAO.findById(id);
+    public NewsDTO findById(long id) {
+        return NewsDTO.from(newsDAO.findById(id));
     }
 }
