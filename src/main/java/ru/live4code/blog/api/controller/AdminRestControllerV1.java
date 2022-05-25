@@ -46,7 +46,7 @@ public class AdminRestControllerV1 {
 
     @DeleteMapping("/news/{id}")
     public ResponseEntity deleteNews(@PathVariable("id") long id) {
-        NewsDTO news = newsService.findById(id);
+        NewsDTO news = newsService.delete(id);
         if (news == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(news);
     }
