@@ -1,12 +1,14 @@
 package ru.live4code.blog.api.dao.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.live4code.blog.api.dao.RoleDAO;
 import ru.live4code.blog.api.dao.repository.RoleRepository;
 import ru.live4code.blog.data.role.Role;
 
 import java.util.List;
 
+@Component
 public class RoleDAOImpl implements RoleDAO {
 
     @Autowired

@@ -2,6 +2,7 @@ package ru.live4code.blog.api.dao.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 import ru.live4code.blog.api.dao.UserDAO;
 import ru.live4code.blog.api.dao.repository.RoleRepository;
 import ru.live4code.blog.api.dao.repository.UserRepository;
@@ -10,6 +11,7 @@ import ru.live4code.blog.data.user.User;
 
 import java.util.List;
 
+@Component
 public class UserDAOImpl implements UserDAO {
 
     @Autowired

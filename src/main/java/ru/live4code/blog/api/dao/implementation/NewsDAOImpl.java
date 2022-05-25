@@ -1,6 +1,7 @@
 package ru.live4code.blog.api.dao.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.live4code.blog.api.dao.NewsDAO;
 import ru.live4code.blog.api.dao.repository.NewsRepository;
 import ru.live4code.blog.api.dao.repository.UserRepository;
@@ -9,6 +10,7 @@ import ru.live4code.blog.data.user.User;
 
 import java.util.List;
 
+@Component
 public class NewsDAOImpl implements NewsDAO {
 
     @Autowired

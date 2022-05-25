@@ -1,6 +1,7 @@
 package ru.live4code.blog.api.dao.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.live4code.blog.api.dao.LikeDAO;
 import ru.live4code.blog.api.dao.repository.LikeRepository;
 import ru.live4code.blog.api.dao.repository.NewsRepository;
@@ -11,6 +12,7 @@ import ru.live4code.blog.data.user.User;
 
 import java.util.List;
 
+@Component
 public class LikeDAOImpl implements LikeDAO {
 
     @Autowired
