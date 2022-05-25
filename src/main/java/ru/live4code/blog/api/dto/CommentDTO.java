@@ -6,11 +6,13 @@ import ru.live4code.blog.data.comment.Comment;
 @Data
 public class CommentDTO {
 
+    private long id;
     private String text;
     private long news_id;
 
     public static CommentDTO from(Comment comment){
         CommentDTO dto = new CommentDTO();
+        dto.setId(comment.getId());
         dto.setText(comment.getText());
         dto.setNews_id(comment.getNews().getId());
         return dto;

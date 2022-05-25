@@ -18,12 +18,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDTO create(Comment comment, long news_id) {
-        return CommentDTO.from(commentDAO.create(comment, news_id));
+        Comment created = commentDAO.create(comment, news_id);
+        if (created == null) return null;
+        return CommentDTO.from(created);
     }
 
     @Override
     public CommentDTO delete(long id) {
-        return CommentDTO.from(commentDAO.delete(id));
+        Comment deleted = commentDAO.delete(id);
+        if (deleted == null) return null;
+        return CommentDTO.from(deleted);
     }
 
     @Override
@@ -33,6 +37,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDTO findById(long id) {
-        return CommentDTO.from(commentDAO.findById(id));
+        Comment find = commentDAO.findById(id);
+        if (find == null) return null;
+        return CommentDTO.from(find);
     }
 }

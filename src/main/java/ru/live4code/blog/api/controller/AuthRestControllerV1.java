@@ -7,20 +7,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.live4code.blog.api.dto.AuthDTO;
-import ru.live4code.blog.api.dto.RoleDTO;
 import ru.live4code.blog.api.dto.UserDTO;
 import ru.live4code.blog.api.security.jwt.JwtTokenProvider;
-import ru.live4code.blog.api.security.jwt.JwtUser;
-import ru.live4code.blog.api.service.RoleService;
 import ru.live4code.blog.api.service.UserService;
-import ru.live4code.blog.data.role.Role;
 import ru.live4code.blog.data.user.User;
 
 import java.util.HashMap;
@@ -41,7 +36,7 @@ public class AuthRestControllerV1 {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthDTO authDTO){
+    public ResponseEntity<Map<Object, Object>> login(@RequestBody AuthDTO authDTO){
         try {
             String username = authDTO.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, authDTO.getPassword()));
@@ -63,11 +58,10 @@ public class AuthRestControllerV1 {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> register(@RequestBody UserDTO userDTO){
         try {
-            User user = UserDTO.to(userDTO);
-            UserDTO isRegistered = userService.register(user);
-            if (isRegistered == null) throw new BadCredentialsException("User with username: " + user.getUsername() + ", not registered!");
+            UserDTO isRegistered = userService.register(UserDTO.to(userDTO));
+            if (isRegistered == null) throw new BadCredentialsException("User not registered!");
             return ResponseEntity.ok(isRegistered);
         }
         catch (Exception e){

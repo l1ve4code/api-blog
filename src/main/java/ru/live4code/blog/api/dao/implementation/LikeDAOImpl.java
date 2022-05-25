@@ -40,8 +40,11 @@ public class LikeDAOImpl implements LikeDAO {
     }
 
     @Override
-    public Like delete(long id) {
-        Like like = likeRepository.findById(id).orElse(null);
+    public Like delete(long user_id, long news_id) {
+        News news = newsRepository.findById(news_id).orElse(null);
+        User user = userRepository.findById(user_id).orElse(null);
+        if (news == null || user == null) return null;
+        Like like = likeRepository.findByUserAndNews(user, news);
         if (like == null) return null;
         likeRepository.delete(like);
         return like;

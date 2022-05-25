@@ -10,20 +10,17 @@ import java.util.stream.Collectors;
 @Data
 public class UserDTO {
 
+    private long id;
     private String surname;
-
     private String name;
-
     private String username;
-
     private String email;
-
     private String password;
-
     private List<String> role_name;
 
     public static UserDTO from(User user){
         UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
         dto.setSurname(user.getSurname());
         dto.setName(user.getName());
         dto.setUsername(user.getUsername());

@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.live4code.blog.api.dto.CommentDTO;
 import ru.live4code.blog.api.dto.NewsDTO;
 import ru.live4code.blog.api.dto.RoleDTO;
-import ru.live4code.blog.api.security.jwt.JwtUser;
 import ru.live4code.blog.api.service.CommentService;
 import ru.live4code.blog.api.service.NewsService;
 import ru.live4code.blog.api.service.RoleService;
-import ru.live4code.blog.data.news.News;
 import ru.live4code.blog.data.role.Role;
 
 @RestController
@@ -29,30 +27,28 @@ public class AdminRestControllerV1 {
     private RoleService roleService;
 
     @DeleteMapping("/comment/{id}")
-    public ResponseEntity deleteComment(@PathVariable("id") long id) {
+    public ResponseEntity<CommentDTO> deleteComment(@PathVariable("id") long id) {
         CommentDTO comment = commentService.delete(id);
         if (comment == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(comment);
     }
 
     @PostMapping("/news")
-    public ResponseEntity addNews(Authentication authentication, @RequestBody NewsDTO newsDTO) {
-        long user_id = ((JwtUser) authentication.getPrincipal()).getId();
-        News news = NewsDTO.to(newsDTO);
-        NewsDTO isCreated = newsService.create(news, user_id);
-        if (isCreated == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return ResponseEntity.ok(isCreated);
+    public ResponseEntity<NewsDTO> addNews(Authentication authentication, @RequestBody NewsDTO newsDTO) {
+        NewsDTO created = newsService.create(NewsDTO.to(newsDTO), authentication);
+        if (created == null) return new ResponseEntity<>(HttpStatus.CONFLICT);
+        return ResponseEntity.ok(created);
     }
 
     @DeleteMapping("/news/{id}")
-    public ResponseEntity deleteNews(@PathVariable("id") long id) {
-        NewsDTO news = newsService.delete(id);
-        if (news == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return ResponseEntity.ok(news);
+    public ResponseEntity<NewsDTO> deleteNews(@PathVariable("id") long id) {
+        NewsDTO deleted = newsService.delete(id);
+        if (deleted == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok(deleted);
     }
 
     @PostMapping("/role")
-    public ResponseEntity role(@RequestBody RoleDTO roleDTO) {
+    public ResponseEntity<Role> role(@RequestBody RoleDTO roleDTO) {
         Role role = roleService.create(RoleDTO.to(roleDTO));
         return ResponseEntity.ok(role);
     }

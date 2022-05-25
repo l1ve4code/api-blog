@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.live4code.blog.api.dto.NewsDTO;
 import ru.live4code.blog.api.service.NewsService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/blog")
 public class BlogRestContollerV1 {
@@ -16,12 +18,12 @@ public class BlogRestContollerV1 {
 
     // NEWS
     @GetMapping("/news")
-    public ResponseEntity getAllNews(){
+    public ResponseEntity<List<NewsDTO>> getAllNews(){
         return ResponseEntity.ok(newsService.getAll());
     }
 
     @GetMapping("/news/{id}")
-    public ResponseEntity getNewsById(@PathVariable("id") long id){
+    public ResponseEntity<NewsDTO> getNewsById(@PathVariable("id") long id){
         NewsDTO news = newsService.findById(id);
         if (news == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(news);

@@ -1,9 +1,11 @@
 package ru.live4code.blog.api.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.live4code.blog.api.dao.LikeDAO;
 import ru.live4code.blog.api.dto.LikeDTO;
+import ru.live4code.blog.api.security.jwt.JwtUser;
 import ru.live4code.blog.api.service.LikeService;
 import ru.live4code.blog.data.like.Like;
 
@@ -17,13 +19,19 @@ public class LikeServiceImpl implements LikeService {
     private LikeDAO likeDAO;
 
     @Override
-    public LikeDTO create(long user_id, long news_id) {
-        return LikeDTO.from(likeDAO.create(user_id, news_id));
+    public LikeDTO create(Authentication authentication, long news_id) {
+        long user_id = ((JwtUser) authentication.getPrincipal()).getId();
+        Like created = likeDAO.create(user_id, news_id);
+        if (created == null) return null;
+        return LikeDTO.from(created);
     }
 
     @Override
-    public LikeDTO delete(long id) {
-        return LikeDTO.from(likeDAO.delete(id));
+    public LikeDTO delete(Authentication authentication, long news_id) {
+        long user_id = ((JwtUser) authentication.getPrincipal()).getId();
+        Like deleted = likeDAO.delete(user_id, news_id);
+        if (deleted == null) return null;
+        return LikeDTO.from(deleted);
     }
 
     @Override
@@ -33,6 +41,8 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public LikeDTO findById(long id) {
-        return LikeDTO.from(likeDAO.findById(id));
+        Like find = likeDAO.findById(id);
+        if (find == null) return null;
+        return LikeDTO.from(find);
     }
 }
