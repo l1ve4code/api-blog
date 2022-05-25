@@ -6,6 +6,8 @@ import ru.live4code.blog.api.dao.RoleDAO;
 import ru.live4code.blog.api.dao.repository.RoleRepository;
 import ru.live4code.blog.data.role.Role;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -16,6 +18,9 @@ public class RoleDAOImpl implements RoleDAO {
 
     @Override
     public Role create(Role role) {
+        role.setCreated_at(new Date());
+        role.setUpdated_at(new Date());
+        role.setUsers(new ArrayList<>());
         roleRepository.save(role);
         return role;
     }

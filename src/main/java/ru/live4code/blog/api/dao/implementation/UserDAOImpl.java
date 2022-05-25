@@ -9,6 +9,8 @@ import ru.live4code.blog.api.dao.repository.UserRepository;
 import ru.live4code.blog.data.role.Role;
 import ru.live4code.blog.data.user.User;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -25,8 +27,13 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User register(User user) {
-        user.setRoles((List<Role>) roleRepository.findByName("USER"));
+        Role roleUser = roleRepository.findByName("ROLE_USER");
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleUser);
+        user.setRoles(userRoles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setCreated_at(new Date());
+        user.setUpdated_at(new Date());
         return userRepository.save(user);
     }
 

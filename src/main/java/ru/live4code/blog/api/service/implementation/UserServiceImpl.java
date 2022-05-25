@@ -3,6 +3,7 @@ package ru.live4code.blog.api.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.live4code.blog.api.dao.UserDAO;
+import ru.live4code.blog.api.dto.UserDTO;
 import ru.live4code.blog.api.service.UserService;
 import ru.live4code.blog.data.user.User;
 
@@ -15,8 +16,8 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
     @Override
-    public User register(User user) {
-        return userDAO.register(user);
+    public UserDTO register(User user) {
+        return UserDTO.from(userDAO.register(user));
     }
 
     @Override
