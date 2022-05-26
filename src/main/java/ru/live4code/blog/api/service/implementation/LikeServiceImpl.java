@@ -21,6 +21,7 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public LikeDTO create(Authentication authentication, long news_id) {
         long user_id = ((JwtUser) authentication.getPrincipal()).getId();
+        if (likeDAO.findByUserAndNews(user_id, news_id) != null) return null;
         Like created = likeDAO.create(user_id, news_id);
         if (created == null) return null;
         return LikeDTO.from(created);
@@ -29,6 +30,7 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public LikeDTO delete(Authentication authentication, long news_id) {
         long user_id = ((JwtUser) authentication.getPrincipal()).getId();
+        if (likeDAO.findByUserAndNews(user_id, news_id) == null) return null;
         Like deleted = likeDAO.delete(user_id, news_id);
         if (deleted == null) return null;
         return LikeDTO.from(deleted);

@@ -22,14 +22,14 @@ public class UserRestControllerV1 {
 
     // LIKES
     @PostMapping("/like/{id}")
-    public ResponseEntity<LikeDTO> setLiked(Authentication authentication, @PathVariable("id") long id){
+    public ResponseEntity<LikeDTO> setLiked(Authentication authentication, @PathVariable("id") long id) {
         LikeDTO like = likeService.create(authentication, id);
         if (like == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return ResponseEntity.ok(like);
     }
 
     @DeleteMapping("/like/{id}")
-    public ResponseEntity<LikeDTO> setDisliked(Authentication authentication, @PathVariable("id") long id){
+    public ResponseEntity<LikeDTO> setDisliked(Authentication authentication, @PathVariable("id") long id) {
         LikeDTO like = likeService.delete(authentication, id);
         if (like == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(like);
@@ -37,10 +37,9 @@ public class UserRestControllerV1 {
 
     // COMMENTS
     @PostMapping("/comment/{id}")
-    public ResponseEntity<CommentDTO> addComment(@PathVariable("id") long id, @RequestBody CommentDTO commentDTO){
+    public ResponseEntity<CommentDTO> addComment(@PathVariable("id") long id, @RequestBody CommentDTO commentDTO) {
         CommentDTO comment = commentService.create(CommentDTO.to(commentDTO), id);
         if (comment == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return ResponseEntity.ok(comment);
     }
-
 }

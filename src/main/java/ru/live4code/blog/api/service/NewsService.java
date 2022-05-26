@@ -9,6 +9,6 @@ import java.util.List;
 public interface NewsService {
     NewsDTO create(News news, Authentication authentication);
     NewsDTO delete(long id);
-    List<NewsDTO> getAll();
-    NewsDTO findById(long id);
+    List<NewsDTO> getAll(Authentication authentication);
+    NewsDTO findById(Authentication authentication, long id);
 }

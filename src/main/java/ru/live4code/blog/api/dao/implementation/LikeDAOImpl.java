@@ -51,6 +51,14 @@ public class LikeDAOImpl implements LikeDAO {
     }
 
     @Override
+    public Like findByUserAndNews(long user_id, long news_id) {
+        News news = newsRepository.findById(news_id).orElse(null);
+        User user = userRepository.findById(user_id).orElse(null);
+        if (news == null || user == null) return null;
+        return likeRepository.findByUserAndNews(user, news);
+    }
+
+    @Override
     public List<Like> getAll() {
         List<Like> likes = (List<Like>) likeRepository.findAll();
         return likes;

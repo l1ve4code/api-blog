@@ -52,5 +52,4 @@ public class AdminRestControllerV1 {
         Role role = roleService.create(RoleDTO.to(roleDTO));
         return ResponseEntity.ok(role);
     }
-
 }
